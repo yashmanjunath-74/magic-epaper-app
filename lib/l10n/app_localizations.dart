@@ -115,7 +115,6 @@ abstract class AppLocalizations {
     Locale('id'),
     Locale('ja'),
     Locale('nb'),
-    Locale('nb', 'NO'),
     Locale('pt'),
     Locale('pt', 'BR'),
     Locale('ru'),
@@ -2597,6 +2596,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Choose image from gallery'**
   String get chooseImageFromGallery;
+
+  /// No description provided for @processingImages.
+  ///
+  /// In en, this message translates to:
+  /// **'Processing images...'**
+  String get processingImages;
+
+  /// No description provided for @refreshModeInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh Mode Information'**
+  String get refreshModeInfo;
+
+  /// No description provided for @fullRefreshInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Full Refresh'**
+  String get fullRefreshInfo;
+
+  /// No description provided for @fullRefreshDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Completely refreshes the entire display by clearing all pixels and redrawing the image. This provides the best image quality and contrast but takes longer to complete.'**
+  String get fullRefreshDescription;
+
+  /// No description provided for @partialRefreshInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Partial Refresh (Waveforms)'**
+  String get partialRefreshInfo;
+
+  /// No description provided for @partialRefreshDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Updates only the changed pixels using optimized waveforms. This is faster than full refresh but may result in ghosting or reduced contrast over time.'**
+  String get partialRefreshDescription;
+
+  /// No description provided for @longPressForInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Long press for more information'**
+  String get longPressForInfo;
+
+  /// No description provided for @custom.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom'**
+  String get custom;
+
+  /// No description provided for @driverSdk.
+  ///
+  /// In en, this message translates to:
+  /// **'Driver / SDK'**
+  String get driverSdk;
+
+  /// No description provided for @selectDriver.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Driver'**
+  String get selectDriver;
+
+  /// No description provided for @fossasia.
+  ///
+  /// In en, this message translates to:
+  /// **'FOSSASIA'**
+  String get fossasia;
+
+  /// No description provided for @waveshare.
+  ///
+  /// In en, this message translates to:
+  /// **'Waveshare'**
+  String get waveshare;
 }
 
 class _AppLocalizationsDelegate
@@ -2647,14 +2718,6 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
 
   // Lookup logic when language+country codes are specified.
   switch (locale.languageCode) {
-    case 'nb':
-      {
-        switch (locale.countryCode) {
-          case 'NO':
-            return AppLocalizationsNbNo();
-        }
-        break;
-      }
     case 'pt':
       {
         switch (locale.countryCode) {

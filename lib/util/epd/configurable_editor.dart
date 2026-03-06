@@ -5,6 +5,8 @@ import 'package:magicepaperapp/provider/getitlocator.dart';
 import 'package:magicepaperapp/util/epd/driver/driver.dart';
 import 'package:magicepaperapp/util/epd/driver/uc8253.dart';
 import 'package:magicepaperapp/util/image_processing/image_processing.dart';
+import 'package:magicepaperapp/view/widget/waveshare_transfer_dialog.dart';
+import 'package:magicepaperapp/util/epd/driver/waveform.dart';
 import 'package:image/image.dart' as img;
 import 'epd.dart';
 
@@ -49,6 +51,9 @@ class ConfigurableEpd extends Epd {
   @override
   final List<Color> colors;
 
+  /// The driver type (e.g., 'FOSSASIA', 'Waveshare')
+  final String driverType;
+
   /// The model identifier for this configurable export display.
   final String _modelId;
   @override
@@ -80,6 +85,7 @@ class ConfigurableEpd extends Epd {
     required this.height,
     required this.colors,
     this.name = 'Arduino Export',
+    this.driverType = 'FOSSASIA',
     String modelId = 'NA',
   }) : _modelId = modelId {
     _addProcessingMethods();
@@ -179,6 +185,16 @@ class ConfigurableEpd extends Epd {
           appLocalizations.threshold,
         ),
       );
+    }
+  }
+
+  @override
+  Future<void> transfer(BuildContext context, img.Image image,
+      {Waveform? waveform}) async {
+    if (driverType == 'Waveshare') {
+      return WaveshareTransferDialog.show(context, image, 1);
+    } else {
+      return super.transfer(context, image, waveform: waveform);
     }
   }
 }

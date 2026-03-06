@@ -6,11 +6,13 @@ class CustomEpdConfig {
   final int height;
   final List<Color> colors;
   final String presetName;
+  final String driver;
   CustomEpdConfig({
     required this.width,
     required this.height,
     required this.colors,
     required this.presetName,
+    required this.driver,
   });
 }
 
@@ -68,6 +70,7 @@ class _ConfigurableEpdDialogState extends State<ConfigurableEpdDialog> {
   late List<Color> _currentColors;
   DisplayPreset? _selectedPreset;
   bool _isCustom = false;
+  String _selectedDriver = 'FOSSASIA';
 
   static final List<DisplayPreset> _presets = [
     DisplayPreset(
@@ -404,6 +407,18 @@ class _ConfigurableEpdDialogState extends State<ConfigurableEpdDialog> {
                   );
                 }).toList(),
               ),
+              const SizedBox(height: 16),
+              DropdownButtonFormField<String>(
+                value: _selectedDriver,
+                items: ['FOSSASIA', 'Waveshare']
+                    .map((driver) => DropdownMenuItem(
+                          value: driver,
+                          child: Text(driver),
+                        ))
+                    .toList(),
+                onChanged: (v) => setState(() => _selectedDriver = v!),
+                decoration: const InputDecoration(labelText: 'Driver / SDK'),
+              ),
             ],
           ),
         ),
@@ -439,6 +454,7 @@ class _ConfigurableEpdDialogState extends State<ConfigurableEpdDialog> {
                         height: int.parse(_heightController.text),
                         colors: _currentColors,
                         presetName: _selectedPreset?.name ?? 'Custom',
+                        driver: _selectedDriver,
                       ),
                     );
                   }

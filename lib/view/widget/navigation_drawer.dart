@@ -58,6 +58,7 @@ class _AppDrawerState extends State<AppDrawer> {
         height: result.height,
         colors: result.colors,
         modelId: result.presetName,
+        driverType: result.driver,
       );
       if (mounted) {
         try {

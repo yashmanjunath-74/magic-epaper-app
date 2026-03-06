@@ -11,6 +11,8 @@ import 'package:magicepaperapp/view/widget/common_scaffold_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:magicepaperapp/provider/color_palette_provider.dart';
 import 'package:magicepaperapp/view/widget/display_card.dart';
+import 'package:magicepaperapp/util/epd/configurable_editor.dart';
+import 'package:magicepaperapp/view/widget/configurable_epd_dialog.dart';
 
 AppLocalizations appLocalizations = getIt.get<AppLocalizations>();
 
@@ -75,8 +77,53 @@ class _DisplaySelectionScreenState extends State<DisplaySelectionScreen> {
                   mainAxisSpacing: 8,
                   crossAxisSpacing: 8,
                 ),
-                itemCount: displays.length,
+                itemCount: displays.length + 1,
                 itemBuilder: (context, index) {
+                  if (index == displays.length) {
+                    return DisplayCard(
+                      key: const Key('custom_display'),
+                      display: ConfigurableEpd(
+                        width: 400,
+                        height: 300,
+                        colors: [Colors.white, Colors.black],
+                        name: appLocalizations.custom,
+                      ),
+                      isSelected: false,
+                      onTap: () async {
+                        final result = await showDialog<CustomEpdConfig>(
+                          context: context,
+                          builder: (context) => const ConfigurableEpdDialog(
+                            initialWidth: 400,
+                            initialHeight: 300,
+                            initialColors: [Colors.white, Colors.black],
+                          ),
+                        );
+
+                        if (result != null && context.mounted) {
+                          final customEpd = ConfigurableEpd(
+                            width: result.width,
+                            height: result.height,
+                            colors: result.colors,
+                            modelId: result.presetName,
+                          );
+                          context
+                              .read<ColorPaletteProvider>()
+                              .updateColors(customEpd.colors);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => _LoadingWrapper(
+                                child: ImageEditor(
+                                  isExportOnly: false,
+                                  device: customEpd,
+                                ),
+                              ),
+                            ),
+                          );
+                        }
+                      },
+                    );
+                  }
                   return DisplayCard(
                     key: Key(displays[index].modelId),
                     display: displays[index],
